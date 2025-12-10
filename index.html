@@ -3,230 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FHE Enterprise v6.3 | Architecture Preview</title>
+    <title>FHE Eva - Real-Time Demo</title>
     <style>
-        :root {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --text-primary: #f8fafc;
-            --accent-success: #10b981;
-            --accent-warning: #f59e0b;
-            --accent-danger: #ef4444;
-            --accent-info: #3b82f6;
-            --font-mono: 'Courier New', Courier, monospace;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            margin: 0;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #f1f5f9;
+            min-height: 100vh;
             padding: 20px;
-            line-height: 1.5;
         }
-        .container { max-width: 800px; margin: 0 auto; }
-        
-        /* Header Area */
-        header { border-bottom: 1px solid #334155; padding-bottom: 20px; margin-bottom: 30px; }
-        h1 { margin: 0; font-size: 1.5rem; letter-spacing: -0.5px; }
-        .badge { 
-            background: var(--accent-info); color: white; padding: 4px 8px; 
-            border-radius: 4px; font-size: 0.75rem; font-weight: bold; vertical-align: middle;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        
-        /* Architecture Visualization */
-        .arch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 30px; }
-        .tier-card {
-            background: var(--bg-secondary); padding: 15px; border-radius: 8px;
-            border: 1px solid #334155; text-align: center; opacity: 0.5; transition: all 0.3s;
-        }
-        .tier-card.active { opacity: 1; border-color: var(--accent-success); box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
-        .tier-card h3 { margin: 0 0 5px 0; font-size: 0.9rem; color: #94a3b8; }
-        .tier-value { font-size: 1.1rem; font-weight: bold; }
-        .status-dot { height: 8px; width: 8px; background: #64748b; border-radius: 50%; display: inline-block; margin-right: 5px; }
-        .active .status-dot { background: var(--accent-success); }
-
-        /* Control Panel */
-        .panel { background: var(--bg-secondary); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        button {
-            flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;
-            background: #334155; color: white; transition: background 0.2s;
-        }
-        button.primary { background: var(--accent-info); }
-        button:hover { filter: brightness(1.1); }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        /* Metrics */
-        .metrics-row { display: flex; justify-content: space-between; margin-top: 15px; border-top: 1px solid #334155; padding-top: 15px; }
-        .metric { text-align: left; }
-        .metric label { display: block; font-size: 0.75rem; color: #94a3b8; }
-        .metric span { font-family: var(--font-mono); font-size: 1.1rem; }
-
-        /* Console */
-        .console {
-            background: #000; border-radius: 8px; padding: 15px; height: 200px;
-            overflow-y: auto; font-family: var(--font-mono); font-size: 0.8rem;
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 20px;
+            margin-bottom: 40px;
             border: 1px solid #334155;
         }
-        .log-entry { margin-bottom: 4px; }
-        .log-info { color: #94a3b8; }
-        .log-success { color: var(--accent-success); }
-        .log-warn { color: var(--accent-warning); }
-        .log-error { color: var(--accent-danger); }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <header>
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div>
-                <h1>FHE Enterprise Validator <span class="badge">v6.3 PREVIEW</span></h1>
-                <p style="margin:5px 0 0 0; color:#94a3b8; font-size:0.9rem;">Adaptive Runtime Architecture • WebGPU • WASM • Cloud</p>
-            </div>
-            <div style="text-align:right;">
-                <div style="font-size:0.8rem; color:#94a3b8;">DEVICE ID</div>
-                <div style="font-family:monospace; font-weight:bold;">S23-ULTRA-ENT</div>
-            </div>
-        </div>
-    </header>
-
-    <div class="arch-grid">
-        <div class="tier-card" id="tier1">
-            <h3>TIER 1 (PRIMARY)</h3>
-            <div class="tier-value"><span class="status-dot"></span>WebGPU</div>
-            <div style="font-size:0.75rem; margin-top:5px;">Adreno/Metal</div>
-        </div>
-        <div class="tier-card" id="tier2">
-            <h3>TIER 2 (FALLBACK)</h3>
-            <div class="tier-value"><span class="status-dot"></span>WASM SIMD</div>
-            <div style="font-size:0.75rem; margin-top:5px;">Rust Core 128-bit</div>
-        </div>
-        <div class="tier-card" id="tier3">
-            <h3>TIER 3 (FAILOVER)</h3>
-            <div class="tier-value"><span class="status-dot"></span>Cloud Proxy</div>
-            <div style="font-size:0.75rem; margin-top:5px;">Secure Enclave</div>
-        </div>
-    </div>
-
-    <div class="panel">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h2 style="margin:0; font-size:1.1rem;">Encryption Pipeline</h2>
-            <span id="system-status" style="color:var(--accent-info); font-size:0.85rem;">● SYSTEM READY</span>
-        </div>
-
-        <div class="metrics-row">
-            <div class="metric">
-                <label>BACKEND</label>
-                <span id="current-backend">---</span>
-            </div>
-            <div class="metric">
-                <label>NTT 4096 TIME</label>
-                <span id="exec-time">---</span>
-            </div>
-            <div class="metric">
-                <label>SECURITY</label>
-                <span style="color:var(--accent-success);">CONST-TIME</span>
-            </div>
-        </div>
-
-        <div class="btn-group">
-            <button class="primary" onclick="runAdaptiveBenchmark()">🚀 Run Adaptive Test</button>
-            <button onclick="forceFallback()">⚠️ Test Fallback</button>
-        </div>
-    </div>
-
-    <div class="console" id="console">
-        <div class="log-entry log-info">> System initialized. Ready for v6.3 validation.</div>
-        <div class="log-entry log-info">> Architecture: Adaptive Tiered Runtime loaded.</div>
-    </div>
-</div>
-
-<script>
-    // --- Enterprise v6.3 Logic Simulation ---
-    const logger = document.getElementById('console');
-    const tiers = {
-        1: document.getElementById('tier1'),
-        2: document.getElementById('tier2'),
-        3: document.getElementById('tier3')
-    };
-    
-    function log(msg, type = 'info') {
-        const div = document.createElement('div');
-        div.className = `log-entry log-${type}`;
-        div.innerText = `> [${new Date().toLocaleTimeString()}] ${msg}`;
-        logger.appendChild(div);
-        logger.scrollTop = logger.scrollHeight;
-    }
-
-    function activateTier(tierNum) {
-        [1,2,3].forEach(t => tiers[t].classList.remove('active'));
-        tiers[tierNum].classList.add('active');
-        const names = {1: 'WebGPU (Adreno)', 2: 'WASM SIMD (Rust)', 3: 'Cloud Relay'};
-        document.getElementById('current-backend').innerText = names[tierNum];
-    }
-
-    async function runAdaptiveBenchmark() {
-        document.getElementById('system-status').innerText = '● PROCESSING...';
-        document.getElementById('system-status').style.color = 'var(--accent-warning)';
-        
-        // Step 1: Try Tier 1 (WebGPU)
-        log("Attempting Tier 1: WebGPU Initialization...", 'info');
-        activateTier(1);
-        
-        try {
-            if (!navigator.gpu) throw new Error("WebGPU not available");
-            const adapter = await navigator.gpu.requestAdapter();
-            if (!adapter) throw new Error("No Adapter found");
-            
-            log(`WebGPU Adapter found: ${adapter.name || 'Adreno/Generic'}`, 'success');
-            log("Executing Compute Shader (NTT 4096)...", 'info');
-            
-            // Simulation der Berechnung (um "Hängen" zu vermeiden, nutzen wir hier einen Timeout)
-            await new Promise(r => setTimeout(r, 800)); 
-            
-            // Success Case (S23 Ultra)
-            log("Success! WebGPU Compute finished.", 'success');
-            document.getElementById('exec-time').innerText = "4.8 ms";
-            document.getElementById('exec-time').style.color = "var(--accent-success)";
-            document.getElementById('system-status').innerText = '● IDLE';
-            
-        } catch (e) {
-            log(`Tier 1 Failed: ${e.message}. Switching to Tier 2...`, 'warn');
-            runFallbackLevel2();
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(90deg, #60a5fa, #34d399);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
         }
-    }
-
-    async function forceFallback() {
-        log("Manual Fallback triggered. Bypassing WebGPU...", 'warn');
-        runFallbackLevel2();
-    }
-
-    async function runFallbackLevel2() {
-        // Step 2: WASM SIMD Fallback
-        activateTier(2);
-        log("Initializing WASM Runtime (Rust Core)...", 'info');
-        document.getElementById('system-status').innerText = '● FALLBACK ACTIVE';
-        
-        await new Promise(r => setTimeout(r, 1200)); // Simulierte Ladezeit
-        
-        log("WASM SIMD128 features detected.", 'success');
-        log("Execution complete (Safe Mode).", 'success');
-        
-        document.getElementById('exec-time').innerText = "18.2 ms";
-        document.getElementById('exec-time').style.color = "var(--accent-warning)";
-        document.getElementById('system-status').innerText = '● IDLE';
-        document.getElementById('system-status').style.color = 'var(--accent-success)';
-    }
-
-    // Init Check
-    if (navigator.gpu) {
-        log("Hardware Check: WebGPU Capable Device detected.", 'success');
-        activateTier(1);
-    } else {
-        log("Hardware Check: Legacy Device. Defaulting to Tier 2.", 'warn');
-        activateTier(2);
-    }
-</script>
-</body>
-</html>
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .stat-card {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .backend-indicator {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .webgpu { background: #10b981; }
+        .wasm-simd { background: #f59e0b; }
+        .wasm-scalar { background: #3b82f6; }
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #3b82f6;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+        button:disabled {
+            background: #475569;
+            cursor: not-allowed;
