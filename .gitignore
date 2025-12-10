@@ -1,40 +1,85 @@
-Citation & License
-​This project is open-source under the MIT License.
-​If you use this benchmark in your research, please cite:
-​Mamutoski, A. (2025). FHE Mobile Research Validator: WebGPU Benchmarks on Snapdragon 8 Gen 2. GitHub.
-​Validated on Samsung Galaxy S23 Ultra (Adreno 740), Chrome 140+, December 10, 2025.
-### 2. Die `.gitignore
+# FHE Mobile Research Validator - .gitignore
+# Created: December 2025
 
-Erstelle die Datei `.gitignore` im Hauptverzeichnis und füge dies ein (hält dein Repo sauber):
-
-`text
-
-# OS generated files
-
+# ========== OS-SPECIFIC FILES ==========
 .DS_Store
-
 .DS_Store?
-
+._*
 .Spotlight-V100
-
-Trashes
-
+.Trashes
 ehthumbs.db
-
 Thumbs.db
-
-# Node / Logs (falls du später npm nutzt)
-
-node modules/
-
-npm-debug.log*
-
-yarn-debug.log*
-
-yarn-error.log*
-
-# Editor directories idea/
-
-.vscode/
-
+desktop.ini
 *.swp
+*.swo
+*~
+
+# ========== IDE & EDITOR FILES ==========
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.idea/
+*.iml
+*.iws
+*.ipr
+*.sublime-workspace
+*.sublime-project
+
+# ========== NODE & DEPENDENCIES ==========
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ========== WEBGPU & BENCHMARK FILES ==========
+*.wgsl.cache
+*.spv
+*.spirv
+/webgpu-debug/
+/shader-cache/
+
+# ========== BUILD & OUTPUT ==========
+/dist/
+/build/
+/out/
+/target/
+*.log
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# ========== LARGE/MEDIA FILES ==========
+/assets/raw/
+/assets/uncompressed/
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# ========== ENVIRONMENT & SECURITY ==========
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+secrets.json
+credentials.json
+firebase-config.json
+
+# ========== BENCHMARK DATA (large) ==========
+/results/raw/
+/results/temp/
+/benchmarks/raw-trace/
+/benchmarks/profile-data/
+*.perfetto_trace
+*.nvs
+*.nvprof
+*.perf
