@@ -48,3 +48,9 @@ git clone [https://github.com/adnan19825/FHE-Research-Validator-Final.git](https
 # No build step required for static demo.
 # For local benchmark execution, serve index.html via a local server:
 npx http-server .
+## 🧪 Interactive WebGPU Tests
+- **GPU Initialization**: Real connection to Adreno 740
+- **Memory Bandwidth**: Actual GB/s measurements
+- **NTT 4096**: Simulated Cooley-Tukey algorithm
+- **Sync Overhead**: Real workgroupBarrier() timing
+- **TFHE Operations**: Bootstrap timing simulation
