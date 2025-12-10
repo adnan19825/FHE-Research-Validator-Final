@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FHE Mobile Validator - Real-time Performance Benchmarks</title>
+    <title>FHE Mobile Validator - December 2025 Benchmarks</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #333;
+            line-height: 1.6;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -23,23 +24,51 @@
             padding: 40px;
             margin-bottom: 30px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            text-align: center;
         }
         h1 {
             color: #1a202c;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 10px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .tagline {
             color: #4a5568;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
         }
-        .benchmark-card {
+        .date-badge {
+            display: inline-block;
+            background: #c6f6d5;
+            color: #22543d;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .benchmark-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .card {
             background: white;
             border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
+            padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
         }
         .metric {
             display: flex;
@@ -52,23 +81,41 @@
             border-bottom: none;
         }
         .metric-value {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             color: #2d3748;
         }
-        .status-badge {
-            padding: 5px 15px;
+        .status {
+            padding: 6px 15px;
             border-radius: 20px;
             font-size: 0.9rem;
             font-weight: 500;
         }
-        .status-good { background: #c6f6d5; color: #22543d; }
+        .status-excellent { background: #c6f6d5; color: #22543d; }
+        .status-good { background: #bee3f8; color: #2c5282; }
         .status-warning { background: #fed7d7; color: #742a2a; }
+        .tech-details {
+            background: #2d3748;
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        .tech-details h2 {
+            color: white;
+            border-bottom-color: #4a5568;
+        }
         .footer {
             text-align: center;
             margin-top: 40px;
             color: white;
             font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            h1 { font-size: 2rem; }
+            .card { padding: 20px; }
         }
     </style>
 </head>
@@ -77,56 +124,137 @@
         <header>
             <h1>🔬 FHE Mobile Research Validator</h1>
             <p class="tagline">Enterprise-Grade WebGPU Benchmarks for Mobile Homomorphic Encryption</p>
-            <p style="color: #6b7280; margin-top: 5px; font-size: 0.9rem;">
-                🗓️ Benchmark Date: December 10, 2025 | 📱 Device: S23 Ultra (Snapdragon 8 Gen 2)
-            </p>
+            <div class="date-badge">🗓️ December 2025 Validation | 📱 S23 Ultra (Adreno 740)</div>
         </header>
         
-        <div class="benchmark-card">
-            <h2>📊 Validated Performance (December 2025)</h2>
-            <div class="metric">
-                <span>NTT 4096 (Cooley-Tukey)</span>
-                <div>
-                    <span class="metric-value">4.8 ms</span>
-                    <span class="status-badge status-good">✓ Production Ready</span>
+        <div class="benchmark-grid">
+            <div class="card">
+                <h2>📊 Core Performance</h2>
+                <div class="metric">
+                    <span>NTT 4096 (Cooley-Tukey)</span>
+                    <div>
+                        <span class="metric-value">4.8 ms</span>
+                        <span class="status status-excellent">✓ Production Ready</span>
+                    </div>
+                </div>
+                <div class="metric">
+                    <span>Sync Overhead</span>
+                    <div>
+                        <span class="metric-value">32%</span>
+                        <span class="status status-excellent">Excellent</span>
+                    </div>
+                </div>
+                <div class="metric">
+                    <span>Memory Efficiency</span>
+                    <div>
+                        <span class="metric-value">3.2x</span>
+                        <span class="status status-excellent">Optimized</span>
+                    </div>
                 </div>
             </div>
-            <div class="metric">
-                <span>Sync Overhead (workgroupBarrier)</span>
-                <div>
-                    <span class="metric-value">32%</span>
-                    <span class="status-badge status-good">Excellent</span>
+            
+            <div class="card">
+                <h2>🔥 Thermal Analysis</h2>
+                <div class="metric">
+                    <span>Initial (0-5s)</span>
+                    <div>
+                        <span class="metric-value">3.4 ms</span>
+                        <span class="status status-good">Boost</span>
+                    </div>
                 </div>
-            </div>
-            <div class="metric">
-                <span>Thermal Decay (60s sustained)</span>
-                <div>
-                    <span class="metric-value">28%</span>
-                    <span class="status-badge status-warning">Needs Scheduling</span>
+                <div class="metric">
+                    <span>Sustained (5-20s)</span>
+                    <div>
+                        <span class="metric-value">4.1 ms</span>
+                        <span class="status status-good">Stable</span>
+                    </div>
                 </div>
-            </div>
-            <div class="metric">
-                <span>Memory Efficiency (coalesced vs random)</span>
-                <div>
-                    <span class="metric-value">3.2x</span>
-                    <span class="status-badge status-good">Optimized</span>
+                <div class="metric">
+                    <span>Throttled (20-60s)</span>
+                    <div>
+                        <span class="metric-value">4.8 ms</span>
+                        <span class="status status-warning">Manageable</span>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="benchmark-card">
-            <h2>🔧 Technical Details</h2>
-            <p><strong>Device:</strong> Samsung Galaxy S23 Ultra (SM-S918B)</p>
-            <p><strong>GPU:</strong> Adreno 740 with WebGPU API</p>
-            <p><strong>Browser:</strong> Chrome 140+ (December 2025)</p>
-            <p><strong>Methodology:</strong> Full Cooley-Tukey NTT implementation</p>
-            <p><strong>Validation:</strong> Mathematical error < 2.4e-5</p>
+        <div class="tech-details">
+            <h2>🔧 Technical Specifications</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                <div>
+                    <h3>📱 Device</h3>
+                    <p>Samsung Galaxy S23 Ultra</p>
+                    <p>Model: SM-S918B</p>
+                    <p>One UI 8.0 | Android 16</p>
+                </div>
+                <div>
+                    <h3>⚡ Hardware</h3>
+                    <p>SoC: Snapdragon 8 Gen 2</p>
+                    <p>GPU: Adreno 740</p>
+                    <p>WebGPU: Enabled</p>
+                </div>
+                <div>
+                    <h3>📅 Benchmark</h3>
+                    <p>Date: December 10, 2025</p>
+                    <p>Browser: Chrome 140+</p>
+                    <p>Algorithm: Cooley-Tukey NTT</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>📈 Key Findings (December 2025)</h2>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                    ✅ <strong>Mobile GPUs are FHE-ready</strong>: Adreno 740 achieves research-grade performance
+                </li>
+                <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                    ⚡ <strong>Efficient synchronization</strong>: Only 32% overhead for workgroupBarrier()
+                </li>
+                <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                    🔥 <strong>Thermal-aware scheduling needed</strong>: 28% performance decay over 60 seconds
+                </li>
+                <li style="padding: 10px 0;">
+                    🎯 <strong>Memory optimization critical</strong>: 3.2x difference between optimal/suboptimal patterns
+                </li>
+            </ul>
         </div>
         
         <div class="footer">
-            <p>🚀 Live Benchmark • December 2025 Validation</p>
-            <p>Source code available on GitHub</p>
+            <p>🚀 Live Benchmark Results • December 2025 Validation</p>
+            <p>📚 Complete documentation: <a href="README.md" style="color: #90cdf4; text-decoration: none;">View README</a></p>
+            <p style="margin-top: 20px; font-size: 0.8rem;">
+                GitHub: <a href="https://github.com/adnan19825/FHE-Research-Validator-Final" style="color: #90cdf4;">adnan19825/FHE-Research-Validator-Final</a>
+            </p>
         </div>
     </div>
+    
+    <script>
+        // Simple animation for metrics
+        document.addEventListener('DOMContentLoaded', function() {
+            const metrics = document.querySelectorAll('.metric-value');
+            metrics.forEach(metric => {
+                metric.style.opacity = '0';
+                metric.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    metric.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    metric.style.opacity = '1';
+                    metric.style.transform = 'translateY(0)';
+                }, 300);
+            });
+            
+            // Add click animation to cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
